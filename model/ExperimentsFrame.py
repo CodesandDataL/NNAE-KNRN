@@ -164,91 +164,91 @@ def getNetStructureParams(dataset_name):
 	else:
 		return 6,0.66
 
-# if __name__ == '__main__':
-# 	if len(sys.argv) != 4:
-# 		raise "Argv number error."
-# 	elif sys.argv[1] == "image":
-# 		datasetsList = imageDatasetsList
-# 	elif sys.argv[1] == "verbal":
-# 		datasetsList = verbalDatasetsList
-# 	elif sys.argv[1] == "6datasets":
-# 		datasetsList = datasetsList
-# 		print(datasetsList)
-# 	elif sys.argv[1] in AvailableDatasets:
-# 		datasetsList = [sys.argv[1]]
-# 	else:
-# 		raise "Error. Unknown."
-# 	anomalyNeighborsNumList = sys.argv[2].split(",")
-# 	dimReductionNeighborsNumList = sys.argv[3].split(",")
+if __name__ == '__main__':
+	if len(sys.argv) != 4:
+		raise "Argv number error."
+	elif sys.argv[1] == "image":
+		datasetsList = imageDatasetsList
+	elif sys.argv[1] == "verbal":
+		datasetsList = verbalDatasetsList
+	elif sys.argv[1] == "6datasets":
+		datasetsList = datasetsList
+		print(datasetsList)
+	elif sys.argv[1] in AvailableDatasets:
+		datasetsList = [sys.argv[1]]
+	else:
+		raise "Error. Unknown."
+	anomalyNeighborsNumList = sys.argv[2].split(",")
+	dimReductionNeighborsNumList = sys.argv[3].split(",")
 
-# 	for dataset in datasetsList:
-# 		itr = ParametersIterator_Settings(dataset, anomalyNeighborsNumList, dimReductionNeighborsNumList)
-# 		datasetResults = []
-# 		data, groundTruth = loading.get_data(dataset)
-# 		print(dataset, data.shape)
-# 		while True:
-# 			try:
-# 				globals().update(next(itr))
-# 				result = {}
-# 				knnt, knnauc = KNN(data, groundTruth, anomalyNeighborsNum)
-# 				aet, aeauc, aeknnauc, nnaeknnt, nnaeknnauc, nnaekrnnauc, indicator = [], [], [], [], [], [], []
-# 				for i in range(repeat_times):
-# 					out = AEKNN(data, groundTruth, layersNum, compressionRate, anomalyNeighborsNum)
-# 					aet.append(out[0])
-# 					aeauc.append(out[1])
-# 					aeknnauc.append(out[2])
+	for dataset in datasetsList:
+		itr = ParametersIterator_Settings(dataset, anomalyNeighborsNumList, dimReductionNeighborsNumList)
+		datasetResults = []
+		data, groundTruth = loading.get_data(dataset)
+		print(dataset, data.shape)
+		while True:
+			try:
+				globals().update(next(itr))
+				result = {}
+				knnt, knnauc = KNN(data, groundTruth, anomalyNeighborsNum)
+				aet, aeauc, aeknnauc, nnaeknnt, nnaeknnauc, nnaekrnnauc, indicator = [], [], [], [], [], [], []
+				for i in range(repeat_times):
+					out = AEKNN(data, groundTruth, layersNum, compressionRate, anomalyNeighborsNum)
+					aet.append(out[0])
+					aeauc.append(out[1])
+					aeknnauc.append(out[2])
 
-# 					out = NNAEKNN_7(data, groundTruth, layersNum, compressionRate, dimReductionNeighborsNum, anomalyNeighborsNum, regu1, regu2)
-# 					nnaeknnt.append(out[0])
-# 					nnaeknnauc.append(out[1])
-# 					nnaekrnnauc.append(out[2])
-# 					indicator.append(out[3])
+					out = NNAEKNN_7(data, groundTruth, layersNum, compressionRate, dimReductionNeighborsNum, anomalyNeighborsNum, regu1, regu2)
+					nnaeknnt.append(out[0])
+					nnaeknnauc.append(out[1])
+					nnaekrnnauc.append(out[2])
+					indicator.append(out[3])
 
-# 				aet = sum(aet)/len(aet)
-# 				aeauc = sum(aeauc)/len(aeauc)
-# 				aeknnauc = sum(aeknnauc)/len(aeknnauc)
-# 				nnaeknnt = sum(nnaeknnt)/len(nnaeknnt)
-# 				nnaeknnauc = sum(nnaeknnauc)/len(nnaeknnauc)
-# 				nnaekrnnauc = sum(nnaekrnnauc)/len(nnaekrnnauc)
-# 				indicator = sum(indicator)/len(indicator)
+				aet = sum(aet)/len(aet)
+				aeauc = sum(aeauc)/len(aeauc)
+				aeknnauc = sum(aeknnauc)/len(aeknnauc)
+				nnaeknnt = sum(nnaeknnt)/len(nnaeknnt)
+				nnaeknnauc = sum(nnaeknnauc)/len(nnaeknnauc)
+				nnaekrnnauc = sum(nnaekrnnauc)/len(nnaekrnnauc)
+				indicator = sum(indicator)/len(indicator)
 
-# 				result['anomalyNeighborsNum'] = anomalyNeighborsNum
-# 				result['layersNum'] = layersNum
-# 				result['compressionRate'] = round(compressionRate, 2)
-# 				result['dimReductionNeighborsNum'] = dimReductionNeighborsNum
-# 				result['regu1'] = round(regu1)
-# 				result['regu2'] = round(regu2)
-# 				result['knnt'], result['knnauc'] = round(knnt, 4), round(knnauc, 4)
+				result['anomalyNeighborsNum'] = anomalyNeighborsNum
+				result['layersNum'] = layersNum
+				result['compressionRate'] = round(compressionRate, 2)
+				result['dimReductionNeighborsNum'] = dimReductionNeighborsNum
+				result['regu1'] = round(regu1)
+				result['regu2'] = round(regu2)
+				result['knnt'], result['knnauc'] = round(knnt, 4), round(knnauc, 4)
 
-# 				result['aet'] = round(aet, 4)
-# 				result['aeauc'] = round(aeauc, 4)
-# 				result['aeknnauc'] = round(aeknnauc, 4)
-# 				result['nnaeknnt'] = round(nnaeknnt, 4)
-# 				result['nnaeknnauc'] = round(nnaeknnauc, 4)
-# 				result['nnaekrnnauc'] = round(nnaekrnnauc, 4)
-# 				result['indicator'] = round(indicator, 8)
+				result['aet'] = round(aet, 4)
+				result['aeauc'] = round(aeauc, 4)
+				result['aeknnauc'] = round(aeknnauc, 4)
+				result['nnaeknnt'] = round(nnaeknnt, 4)
+				result['nnaeknnauc'] = round(nnaeknnauc, 4)
+				result['nnaekrnnauc'] = round(nnaekrnnauc, 4)
+				result['indicator'] = round(indicator, 8)
 
-# 				processFile = open("./process.txt", 'a+')
-# 				original = sys.stdout
-# 				sys.stdout = processFile
-# 				print(dataset, result)
-# 				sys.stdout = original
-# 				datasetResults.append(result.copy())
-# 			except StopIteration:
-# 				break
-# 		SortingAndRecording(datasetResults, dataset)
+				processFile = open("./process.txt", 'a+')
+				original = sys.stdout
+				sys.stdout = processFile
+				print(dataset, result)
+				sys.stdout = original
+				datasetResults.append(result.copy())
+			except StopIteration:
+				break
+		SortingAndRecording(datasetResults, dataset)
 
-def call_shape(dataset):
-	dict_ = {
-		"USPS": (16, 16),
-		"mnist": (28, 28),
-		"fashion_mnist": (28, 28),
-	}
-	return dict_[dataset]
+# def call_shape(dataset):
+# 	dict_ = {
+# 		"USPS": (16, 16),
+# 		"mnist": (28, 28),
+# 		"fashion_mnist": (28, 28),
+# 	}
+# 	return dict_[dataset]
 
-if __name__ == "__main__":
-	import PIL.Image as Image
-	from util import ImShow as I
-	dataset = "fashion_mnist"
-	data, groundTruth = loading.get_data(dataset)
-	Image.fromarray(I.tile_raster_images(X=data[:25],img_shape=(call_shape(dataset)), tile_shape=(5, 5),tile_spacing=(1, 1))).save(r"original.png")
+# if __name__ == "__main__":
+# 	import PIL.Image as Image
+# 	from util import ImShow as I
+# 	dataset = "fashion_mnist"
+# 	data, groundTruth = loading.get_data(dataset)
+# 	Image.fromarray(I.tile_raster_images(X=data[:25],img_shape=(call_shape(dataset)), tile_shape=(5, 5),tile_spacing=(1, 1))).save(r"original.png")

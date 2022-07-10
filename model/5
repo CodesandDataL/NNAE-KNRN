@@ -1,9 +1,0 @@
-#!/bin/sh
-eval "$(conda shell.bash hook)"
-conda activate tfvenv2
-python ExperimentsFrame.py waveform_noise 25 5
-python ExperimentsFrame.py waveform_noise 50 5
-python ExperimentsFrame.py waveform_noise 100 5
-python ExperimentsFrame.py waveform_noise 150 5
-python ExperimentsFrame.py waveform_noise 200 5
-conda deactivate
